@@ -1,6 +1,10 @@
 defmodule PlotsCreator.GitHubClient do
   @base_url "https://api.github.com/repos/plotly/datasets/contents"
-  @headers [{"User-Agent", "Elixir"}, {"Authorization", "token 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"}]
+  @headers [
+    {"User-Agent", "Elixir"},
+    {"Authorization",
+     "token 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"}
+  ]
 
   def fetch_csv_headers(csv_name, column_name) do
     case HTTPoison.get("#{@base_url}/#{csv_name}", @headers) do
@@ -39,11 +43,12 @@ defmodule PlotsCreator.GitHubClient do
     lines = String.split(csv_content, "\n", trim: true)
     [header | _records] = lines
     headers = String.split(header, ",", trim: true)
-    # Use NimbleCSV to parse the CSV content
+
     NimbleCSV.RFC4180.parse_string(csv_content)
     |> case do
       rows ->
-        column_index = Enum.find_index(headers, fn header -> header == column_name end)
+        column_index =
+          Enum.find_index(headers, fn header -> header == column_name end)
 
         if column_index do
           records = Enum.map(rows, fn row -> Enum.at(row, column_index) end)
@@ -51,9 +56,6 @@ defmodule PlotsCreator.GitHubClient do
         else
           {:error, :column_not_found}
         end
-
-      _ ->
-        {:error, :invalid_csv}
     end
   end
 end
