@@ -51,7 +51,8 @@ defmodule PlotsCreator.MixProject do
       {:jason, "~> 1.2"},
       {:plug_cowboy, "~> 2.5"},
       {:tailwind, "~> 0.1", runtime: Mix.env() == :dev},
-      {:httpoison, "~> 2.0"}
+      {:httpoison, "~> 2.0"},
+      {:nimble_csv, "~> 1.2"}
     ]
   end
 

@@ -19,6 +19,7 @@
     <p><strong>Dataset Name:</strong> <%= @your_plots.dataset_name %></p>
     <p><strong>Expression:</strong> <%= @your_plots.expression %></p>
   </div>
+  <div id="histogram" class="w-full h-80" phx-hook="PlotlyHook" phx-dataset={Jason.encode!(@dataset)}></div>
 </div>
 
 <div class="flex space-x-4">
