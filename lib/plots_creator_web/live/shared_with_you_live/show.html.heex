@@ -1,0 +1,21 @@
+<h1>Show Shared with you</h1>
+
+<%= if @live_action in [:edit] do %>
+  <.modal return_to={Routes.shared_with_you_show_path(@socket, :show, @shared_with_you)}>
+    <.live_component
+      module={PlotsCreatorWeb.SharedWithYouLive.FormComponent}
+      id={@shared_with_you.id}
+      title={@page_title}
+      action={@live_action}
+      shared_with_you={@shared_with_you}
+      return_to={Routes.shared_with_you_show_path(@socket, :show, @shared_with_you)}
+    />
+  </.modal>
+<% end %>
+
+<ul>
+
+</ul>
+
+<span><%= live_patch "Edit", to: Routes.shared_with_you_show_path(@socket, :edit, @shared_with_you), class: "button" %></span> |
+<span><%= live_redirect "Back", to: Routes.shared_with_you_index_path(@socket, :index) %></span>

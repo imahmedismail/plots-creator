@@ -1,0 +1,21 @@
+<h1>Show Your plots</h1>
+
+<%= if @live_action in [:edit] do %>
+  <.modal return_to={Routes.your_plots_show_path(@socket, :show, @your_plots)}>
+    <.live_component
+      module={PlotsCreatorWeb.YourPlotsLive.FormComponent}
+      id={@your_plots.id}
+      title={@page_title}
+      action={@live_action}
+      your_plots={@your_plots}
+      return_to={Routes.your_plots_show_path(@socket, :show, @your_plots)}
+    />
+  </.modal>
+<% end %>
+
+<ul>
+
+</ul>
+
+<span><%= live_patch "Edit", to: Routes.your_plots_show_path(@socket, :edit, @your_plots), class: "button" %></span> |
+<span><%= live_redirect "Back", to: Routes.your_plots_index_path(@socket, :index) %></span>

@@ -1,26 +1,30 @@
-<h1>Register</h1>
+<h1 class="text-2xl font-bold mb-6 text-gray-800">Register</h1>
 
-<.form let={f} for={@changeset} action={Routes.user_registration_path(@conn, :create)}>
+<.form let={f} for={@changeset} action={Routes.user_registration_path(@conn, :create)} class="space-y-6">
   <%= if @changeset.action do %>
-    <div class="alert alert-danger">
+    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
       <p>Oops, something went wrong! Please check the errors below.</p>
     </div>
   <% end %>
 
-  <%= label f, :email %>
-  <%= email_input f, :email, required: true %>
-  <%= error_tag f, :email %>
-
-  <%= label f, :password %>
-  <%= password_input f, :password, required: true %>
-  <%= error_tag f, :password %>
+  <div>
+    <%= label f, :email, class: "block text-gray-700 text-sm font-bold mb-2" %>
+    <%= email_input f, :email, required: true, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" %>
+    <%= error_tag f, :email %>
+  </div>
 
   <div>
-    <%= submit "Register" %>
+    <%= label f, :password, class: "block text-gray-700 text-sm font-bold mb-2" %>
+    <%= password_input f, :password, required: true, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" %>
+    <%= error_tag f, :password %>
+  </div>
+
+  <div>
+    <%= submit "Register", class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" %>
   </div>
 </.form>
 
-<p>
-  <%= link "Log in", to: Routes.user_session_path(@conn, :new) %> |
-  <%= link "Forgot your password?", to: Routes.user_reset_password_path(@conn, :new) %>
+<p class="mt-6 text-center text-gray-600">
+  <%= link "Log in", to: Routes.user_session_path(@conn, :new), class: "text-blue-500 hover:underline" %> |
+  <%= link "Forgot your password?", to: Routes.user_reset_password_path(@conn, :new), class: "text-blue-500 hover:underline" %>
 </p>
