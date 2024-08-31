@@ -5,8 +5,7 @@ defmodule PlotsCreator.Repo.Migrations.CreateYourPlots do
     create table(:your_plots) do
       add(:name, :string)
       add(:dataset_name, :string)
-      add(:expression_1, :string)
-      add(:expression_2, :string)
+      add(:expression, :string)
 
       timestamps()
     end
