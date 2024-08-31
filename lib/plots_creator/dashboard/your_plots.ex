@@ -3,13 +3,17 @@ defmodule PlotsCreator.Dashboard.YourPlots do
   import Ecto.Changeset
 
   schema "your_plots" do
+    field :name, :string
+    field :dataset_name, :string
+    field :expression, :string
+
     timestamps()
   end
 
   @doc false
   def changeset(your_plots, attrs) do
     your_plots
-    |> cast(attrs, [])
-    |> validate_required([])
+    |> cast(attrs, [:name, :dataset_name, :expression])
+    |> validate_required([:name, :dataset_name, :expression])
   end
 end

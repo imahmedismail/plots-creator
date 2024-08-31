@@ -1,8 +1,13 @@
 export const FlashAutoDismiss = {
-    mounted() {
-        console.log("Hook called?")
-      setTimeout(() => {
-        this.el.remove()
-      }, 5000) // 5000ms = 5 seconds, adjust as needed
-    }
+  mounted() {
+    this.scheduleRemoval();
+  },
+  updated() {
+    this.scheduleRemoval();
+  },
+  scheduleRemoval() {
+    setTimeout(() => {
+      this.el.remove();
+    }, 3000); // Removes the flash message after 5 seconds
   }
+}

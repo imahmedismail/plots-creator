@@ -20,7 +20,7 @@ defmodule PlotsCreatorWeb.YourPlotsLive.FormComponent do
       |> Dashboard.change_your_plots(your_plots_params)
       |> Map.put(:action, :validate)
 
-    {:noreply, assign(socket, :changeset, changeset)}
+    {:noreply, socket |> assign(:changeset, changeset)}
   end
 
   def handle_event("save", %{"your_plots" => your_plots_params}, socket) do

@@ -1,5 +1,5 @@
-<div>
-  <h2><%= @title %></h2>
+<div class="max-w-lg mx-auto p-6 bg-white rounded-lg shadow-md">
+  <h2 class="text-2xl font-semibold text-gray-800 mb-4"><%= @title %></h2>
 
   <.form
     let={f}
@@ -7,10 +7,29 @@
     id="your_plots-form"
     phx-target={@myself}
     phx-change="validate"
-    phx-submit="save">
+    phx-submit="save"
+    class="space-y-6">
+
+    <div>
+      <%= label f, :name, class: "block text-sm font-medium text-gray-700" %>
+      <%= text_input f, :name, class: "mt-1 mb-5 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" %>
+      <%= error_tag f, :name %>
+    </div>
+
+    <div>
+      <%= label f, :dataset_name, "Dataset Name", class: "block text-sm font-medium text-gray-700" %>
+      <%= text_input f, :dataset_name, class: "mt-1 mb-5 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" %>
+      <%= error_tag f, :dataset_name %>
+    </div>
+
+    <div>
+      <%= label f, :expression, "Expression Name", class: "block text-sm font-medium text-gray-700" %>
+      <%= text_input f, :expression, class: "mt-1 mb-5 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" %>
+      <%= error_tag f, :expression %>
+    </div>
   
     <div>
-      <%= submit "Save", phx_disable_with: "Saving..." %>
+      <%= submit "Save", phx_disable_with: "Saving...", class: "w-full inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" %>
     </div>
   </.form>
 </div>

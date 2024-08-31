@@ -1,4 +1,4 @@
-<h1>Listing Your plots</h1>
+<h1 class="text-2xl font-bold mb-4">Listing Your Plots</h1>
 
 <%= if @live_action in [:new, :edit] do %>
   <.modal return_to={Routes.your_plots_index_path(@socket, :index)}>
@@ -13,25 +13,53 @@
   </.modal>
 <% end %>
 
-<table>
-  <thead>
-    <tr>
-
-      <th></th>
-    </tr>
-  </thead>
-  <tbody id="your_plots">
-    <%= for your_plots <- @your_plots_collection do %>
-      <tr id={"your_plots-#{your_plots.id}"}>
-
-        <td>
-          <span><%= live_redirect "Show", to: Routes.your_plots_show_path(@socket, :show, your_plots) %></span>
-          <span><%= live_patch "Edit", to: Routes.your_plots_index_path(@socket, :edit, your_plots) %></span>
-          <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: your_plots.id, data: [confirm: "Are you sure?"] %></span>
-        </td>
+<div class="overflow-x-auto">
+  <table class="min-w-full bg-white shadow-md rounded-lg">
+    <thead>
+      <tr>
+        <th class="px-6 py-3 border-b-2 border-gray-300 text-left leading-4 text-gray-600 uppercase tracking-wider">
+          Plot Name
+        </th>
+        <th class="px-6 py-3 border-b-2 border-gray-300 text-left leading-4 text-gray-600 uppercase tracking-wider">
+          Dataset Name
+        </th>
+        <th class="px-6 py-3 border-b-2 border-gray-300 text-left leading-4 text-gray-600 uppercase tracking-wider">
+          Expression
+        </th>
+        <th class="px-6 py-3 border-b-2 border-gray-300 text-left leading-4 text-gray-600 uppercase tracking-wider">
+          Actions
+        </th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
+    <tbody id="your_plots">
+      <%= for your_plots <- @your_plots_collection do %>
+        <tr id={"your_plots-#{your_plots.id}"} class="border-b border-gray-200 hover:bg-gray-100">
+          <td class="px-6 py-4 whitespace-no-wrap">
+            <%= your_plots.name %>
+          </td>
+          <td class="px-6 py-4 whitespace-no-wrap">
+            <%= your_plots.dataset_name %>
+          </td>
+          <td class="px-6 py-4 whitespace-no-wrap">
+            <%= your_plots.expression %>
+          </td>
+          <td class="px-6 py-4 whitespace-no-wrap">
+            <span class="inline-flex rounded-md shadow-sm">
+              <%= live_redirect "Show", to: Routes.your_plots_show_path(@socket, :show, your_plots), class: "text-blue-600 hover:text-blue-900" %>
+            </span>
+            <span class="inline-flex rounded-md shadow-sm ml-2">
+              <%= live_patch "Edit", to: Routes.your_plots_index_path(@socket, :edit, your_plots), class: "text-yellow-600 hover:text-yellow-900" %>
+            </span>
+            <span class="inline-flex rounded-md shadow-sm ml-2">
+              <%= link "Delete", to: "#", phx_click: "delete", phx_value_id: your_plots.id, data: [confirm: "Are you sure?"], class: "text-red-600 hover:text-red-900" %>
+            </span>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
 
-<span><%= live_patch "New Your plots", to: Routes.your_plots_index_path(@socket, :new) %></span>
+<div class="mt-4">
+  <%= live_patch "New Your Plots", to: Routes.your_plots_index_path(@socket, :new), class: "bg-blue-600 text-white font-bold py-2 px-4 rounded-md hover:bg-blue-700" %>
+</div>
