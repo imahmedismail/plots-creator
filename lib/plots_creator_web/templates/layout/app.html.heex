@@ -1,84 +1,79 @@
 <div class="flex h-screen">
+  <!-- Sidebar -->
   <div class="w-64 bg-gray-800 text-white">
     <nav class="flex flex-col mt-5">
       <%= if @current_user do %>
-  <%= 
-    if @socket do
-      live_patch "Your plots", 
-        to: Routes.your_plots_index_path(@socket, :index),
-        class: "block px-4 py-2 mt-2 text-sm font-medium rounded-md hover:bg-gray-700"
-    else
-      live_patch "Your plots", 
-        to: Routes.your_plots_index_path(@conn, :index),
-        class: "block px-4 py-2 mt-2 text-sm font-medium rounded-md hover:bg-gray-700"
-    end
-  %>
-  <%= 
-    if @socket do
-      live_patch "Shared with you", 
-        to: Routes.shared_with_you_index_path(@socket, :index),
-        class: "block px-4 py-2 mt-2 text-sm font-medium rounded-md hover:bg-gray-700"
-    else
-      live_patch "Shared with you", 
-        to: Routes.shared_with_you_index_path(@conn, :index),
-        class: "block px-4 py-2 mt-2 text-sm font-medium rounded-md hover:bg-gray-700"
-    end
-  %>
-  <%= 
-    if @socket do
-      link "Settings", 
-        to: Routes.user_settings_path(@socket, :edit),
-        class: "block px-4 py-2 mt-2 text-sm font-medium rounded-md hover:bg-gray-700"
-    else
-      link "Settings", 
-        to: Routes.user_settings_path(@conn, :edit),
-        class: "block px-4 py-2 mt-2 text-sm font-medium rounded-md hover:bg-gray-700"
-    end
-  %>
-  <%= 
-    if @socket do
-      link "Log out", 
-        to: Routes.user_session_path(@socket, :delete),
-        method: :delete,
-        class: "block px-4 py-2 mt-2 text-sm font-medium rounded-md hover:bg-gray-700"
-    else
-      link "Log out", 
-        to: Routes.user_session_path(@conn, :delete),
-        method: :delete,
-        class: "block px-4 py-2 mt-2 text-sm font-medium rounded-md hover:bg-gray-700"
-    end
-  %>
-<% else %>
-  <%= 
-    if @socket do
-      link "Register", 
-        to: Routes.user_registration_path(@socket, :new),
-        class: "block px-4 py-2 mt-2 text-sm font-medium rounded-md hover:bg-gray-700"
-    else
-      link "Register", 
-        to: Routes.user_registration_path(@conn, :new),
-        class: "block px-4 py-2 mt-2 text-sm font-medium rounded-md hover:bg-gray-700"
-    end
-  %>
-  <%= 
-    if @socket do
-      link "Log in", 
-        to: Routes.user_session_path(@socket, :new),
-        class: "block px-4 py-2 mt-2 text-sm font-medium rounded-md hover:bg-gray-700"
-    else
-      link "Log in", 
-        to: Routes.user_session_path(@conn, :new),
-        class: "block px-4 py-2 mt-2 text-sm font-medium rounded-md hover:bg-gray-700"
-    end
-  %>
-<% end %>
-
-
-      
+        <%= 
+          if @socket do
+            live_patch "Your plots", 
+              to: Routes.your_plots_index_path(@socket, :index),
+              class: "block px-4 py-2 mt-2 text-sm font-medium rounded-md hover:bg-gray-700"
+          else
+            live_patch "Your plots", 
+              to: Routes.your_plots_index_path(@conn, :index),
+              class: "block px-4 py-2 mt-2 text-sm font-medium rounded-md hover:bg-gray-700"
+          end
+        %>
+        <%= 
+          if @socket do
+            live_patch "Shared with you", 
+              to: Routes.shared_with_you_index_path(@socket, :index),
+              class: "block px-4 py-2 mt-2 text-sm font-medium rounded-md hover:bg-gray-700"
+          else
+            live_patch "Shared with you", 
+              to: Routes.shared_with_you_index_path(@conn, :index),
+              class: "block px-4 py-2 mt-2 text-sm font-medium rounded-md hover:bg-gray-700"
+          end
+        %>
+        <%= 
+          if @socket do
+            link "Settings", 
+              to: Routes.user_settings_path(@socket, :edit),
+              class: "block px-4 py-2 mt-2 text-sm font-medium rounded-md hover:bg-gray-700"
+          else
+            link "Settings", 
+              to: Routes.user_settings_path(@conn, :edit),
+              class: "block px-4 py-2 mt-2 text-sm font-medium rounded-md hover:bg-gray-700"
+          end
+        %>
+        <form action="/users/log_out" method="post">
+          <input type="hidden" name="_csrf_token" value={Plug.CSRFProtection.get_csrf_token()}>
+          <button
+            type="submit"
+            class="block px-4 py-2 mt-2 text-sm font-medium rounded-md hover:bg-gray-700 bg-gray-900 text-white"
+          >
+            Log out
+          </button>
+        </form>
+      <% else %>
+        <%= 
+          if @socket do
+            link "Register", 
+              to: Routes.user_registration_path(@socket, :new),
+              class: "block px-4 py-2 mt-2 text-sm font-medium rounded-md hover:bg-gray-700"
+          else
+            link "Register", 
+              to: Routes.user_registration_path(@conn, :new),
+              class: "block px-4 py-2 mt-2 text-sm font-medium rounded-md hover:bg-gray-700"
+          end
+        %>
+        <%= 
+          if @socket do
+            link "Log in", 
+              to: Routes.user_session_path(@socket, :new),
+              class: "block px-4 py-2 mt-2 text-sm font-medium rounded-md hover:bg-gray-700"
+          else
+            link "Log in", 
+              to: Routes.user_session_path(@conn, :new),
+              class: "block px-4 py-2 mt-2 text-sm font-medium rounded-md hover:bg-gray-700"
+          end
+        %>
+      <% end %>
     </nav>
   </div>
+  
+  <!-- Main content -->
   <div class="flex-1 p-6 bg-gray-100">
     <%= @inner_content %>
   </div>
 </div>
-
