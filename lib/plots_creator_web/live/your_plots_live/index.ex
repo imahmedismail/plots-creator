@@ -1,9 +1,9 @@
 defmodule PlotsCreatorWeb.YourPlotsLive.Index do
-  alias PlotsCreator.Accounts
   use PlotsCreatorWeb, :live_view
 
   alias PlotsCreator.Dashboard
   alias PlotsCreator.Dashboard.YourPlots
+  alias PlotsCreator.Accounts
 
   @impl true
   def mount(_params, session, socket) do
