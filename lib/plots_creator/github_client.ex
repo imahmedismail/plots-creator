@@ -2,82 +2,58 @@ defmodule PlotsCreator.GitHubClient do
   @base_url "https://api.github.com/repos/plotly/datasets/contents"
   @headers [{"User-Agent", "Elixir"}, {"Authorization", "token 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"}]
 
-  def fetch_csv_files do
-    case HTTPoison.get(@base_url, @headers) do
-      {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
-        body
-        |> Jason.decode!()
-        |> Enum.filter(&(&1["name"] =~ ~r/\.csv$/))
-        |> Enum.map(& &1["name"])
-
-      {:ok, %HTTPoison.Response{status_code: status_code}} ->
-        IO.puts("Failed to fetch files. Status code: #{status_code}")
-        []
-
-      {:error, %HTTPoison.Error{reason: reason}} ->
-        IO.puts("Request failed: #{reason}")
-        []
-    end
-  end
-
-  def fetch_csv_headers(csv_name) do
+  def fetch_csv_headers(csv_name, column_name) do
     case HTTPoison.get("#{@base_url}/#{csv_name}", @headers) do
       {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
         body
         |> Jason.decode!()
         |> Map.get("download_url")
-        |> fetch_and_parse_csv_headers()
+        |> fetch_and_parse_csv(column_name)
 
       {:ok, %HTTPoison.Response{status_code: status_code}} ->
         IO.puts("Failed to fetch CSV file. Status code: #{status_code}")
-        []
+        {:error, status_code}
 
       {:error, %HTTPoison.Error{reason: reason}} ->
         IO.puts("Request failed: #{reason}")
-        []
+        {:error, reason}
     end
   end
 
-  defp fetch_and_parse_csv_headers(download_url) do
+  defp fetch_and_parse_csv(download_url, column_name) do
     case HTTPoison.get(download_url) do
       {:ok, %HTTPoison.Response{status_code: 200, body: csv_content}} ->
-        csv_content
-        |> parse_csv_headers()
+        parse_csv(csv_content, column_name)
 
       {:ok, %HTTPoison.Response{status_code: status_code}} ->
         IO.puts("Failed to download CSV file. Status code: #{status_code}")
-        []
+        {:error, status_code}
 
       {:error, %HTTPoison.Error{reason: reason}} ->
         IO.puts("Download request failed: #{reason}")
-        []
+        {:error, reason}
     end
   end
 
-  defp parse_csv_headers(csv_content) do
-    csv_content
-    |> String.split("\n")
-    |> List.first()
-    |> String.split(",")
-  end
+  defp parse_csv(csv_content, column_name) do
+    lines = String.split(csv_content, "\n", trim: true)
+    [header | _records] = lines
+    headers = String.split(header, ",", trim: true)
+    # Use NimbleCSV to parse the CSV content
+    NimbleCSV.RFC4180.parse_string(csv_content)
+    |> case do
+      rows ->
+        column_index = Enum.find_index(headers, fn header -> header == column_name end)
 
-  def generate_select_options(filenames) do
-    filenames
-    |> Enum.map(&parse_filename/1)
-  end
+        if column_index do
+          records = Enum.map(rows, fn row -> Enum.at(row, column_index) end)
+          {:ok, records}
+        else
+          {:error, :column_not_found}
+        end
 
-  defp parse_filename(filename) do
-    readable_name = filename
-    |> String.replace(~r/[_-]/, " ")
-    |> String.replace(~r/\b[a-z]/, &String.upcase(&1))
-    |> String.replace(~r/\s+/, " ")
-
-    {readable_name, filename}
-  end
-
-  def generate_original_form_from_human_readable_name(human_readable_name) do
-    human_readable_name
-    |> String.replace(~r/\s+/, "_")
-    |> String.downcase()
+      _ ->
+        {:error, :invalid_csv}
+    end
   end
 end
