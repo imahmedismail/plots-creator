@@ -39,7 +39,14 @@ defmodule PlotsCreatorWeb.ErrorHelpers do
     # should be written to the errors.po file. The :count option is
     # set by Ecto and indicates we should also apply plural rules.
     if count = opts[:count] do
-      Gettext.dngettext(PlotsCreatorWeb.Gettext, "errors", msg, msg, count, opts)
+      Gettext.dngettext(
+        PlotsCreatorWeb.Gettext,
+        "errors",
+        msg,
+        msg,
+        count,
+        opts
+      )
     else
       Gettext.dgettext(PlotsCreatorWeb.Gettext, "errors", msg, opts)
     end

@@ -1,12 +1,19 @@
 defmodule PlotsCreatorWeb.YourPlotsLive.Index do
+  alias PlotsCreator.Accounts
   use PlotsCreatorWeb, :live_view
 
   alias PlotsCreator.Dashboard
   alias PlotsCreator.Dashboard.YourPlots
 
   @impl true
-  def mount(_params, _session, socket) do
-    {:ok, assign(socket, :your_plots_collection, list_your_plots())}
+  def mount(_params, session, socket) do
+    current_user = Accounts.get_user_by_session_token(session["user_token"])
+
+    {:ok,
+     assign(socket, %{
+       your_plots_collection: list_your_plots(),
+       current_user: current_user
+     })}
   end
 
   @impl true

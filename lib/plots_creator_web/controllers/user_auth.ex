@@ -5,9 +5,6 @@ defmodule PlotsCreatorWeb.UserAuth do
   alias PlotsCreator.Accounts
   alias PlotsCreatorWeb.Router.Helpers, as: Routes
 
-  # Make the remember me cookie valid for 60 days.
-  # If you want bump or reduce this value, also change
-  # the token expiry itself in UserToken.
   @max_age 60 * 60 * 24 * 60
   @remember_me_cookie "_plots_creator_web_user_remember_me"
   @remember_me_options [sign: true, max_age: @max_age, same_site: "Lax"]
@@ -31,7 +28,12 @@ defmodule PlotsCreatorWeb.UserAuth do
     conn
     |> renew_session()
     |> put_session(:user_token, token)
-    |> put_session(:live_socket_id, "users_sessions:#{Base.url_encode64(token)}")
+    |> put_session(
+      :live_socket_id,
+      "users_sessions:#{Base.url_encode64(token)}"
+    )
+    # Add this line
+    |> assign(:socket, nil)
     |> maybe_write_remember_me_cookie(token, params)
     |> put_flash(:info, "Logged in successfully.")
     |> redirect(to: user_return_to || signed_in_path(conn))
@@ -45,25 +47,12 @@ defmodule PlotsCreatorWeb.UserAuth do
     conn
   end
 
-  # This function renews the session ID and erases the whole
-  # session to avoid fixation attacks. If there is any data
-  # in the session you may want to preserve after log in/log out,
-  # you must explicitly fetch the session data before clearing
-  # and then immediately set it after clearing, for example:
-  #
-  #     defp renew_session(conn) do
-  #       preferred_locale = get_session(conn, :preferred_locale)
-  #
-  #       conn
-  #       |> configure_session(renew: true)
-  #       |> clear_session()
-  #       |> put_session(:preferred_locale, preferred_locale)
-  #     end
-  #
   defp renew_session(conn) do
     conn
     |> configure_session(renew: true)
     |> clear_session()
+    # Add this line
+    |> assign(:socket, nil)
   end
 
   @doc """
@@ -82,6 +71,8 @@ defmodule PlotsCreatorWeb.UserAuth do
     conn
     |> renew_session()
     |> delete_resp_cookie(@remember_me_cookie)
+    # Add this line
+    |> assign(:socket, nil)
     |> redirect(to: "/")
   end
 
@@ -92,7 +83,10 @@ defmodule PlotsCreatorWeb.UserAuth do
   def fetch_current_user(conn, _opts) do
     {user_token, conn} = ensure_user_token(conn)
     user = user_token && Accounts.get_user_by_session_token(user_token)
+
     assign(conn, :current_user, user)
+    # Add this line
+    |> assign(:socket, nil)
   end
 
   defp ensure_user_token(conn) do

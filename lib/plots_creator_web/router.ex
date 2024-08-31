@@ -2,6 +2,7 @@ defmodule PlotsCreatorWeb.Router do
   use PlotsCreatorWeb, :router
 
   import PlotsCreatorWeb.UserAuth
+  import PlotsCreatorWeb.Plugs.CurrentUser, only: [assign_current_user: 2]
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -11,6 +12,7 @@ defmodule PlotsCreatorWeb.Router do
     plug :protect_from_forgery
     plug :put_secure_browser_headers
     plug :fetch_current_user
+    plug :assign_current_user
   end
 
   pipeline :api do
@@ -18,7 +20,7 @@ defmodule PlotsCreatorWeb.Router do
   end
 
   scope "/", PlotsCreatorWeb do
-    pipe_through :browser
+    pipe_through [:browser, :redirect_if_user_is_authenticated]
 
     get "/", PageController, :index
   end
@@ -77,7 +79,10 @@ defmodule PlotsCreatorWeb.Router do
 
     get "/users/settings", UserSettingsController, :edit
     put "/users/settings", UserSettingsController, :update
-    get "/users/settings/confirm_email/:token", UserSettingsController, :confirm_email
+
+    get "/users/settings/confirm_email/:token",
+        UserSettingsController,
+        :confirm_email
 
     live "/your_plots", YourPlotsLive.Index, :index
     live "/your_plots/new", YourPlotsLive.Index, :new

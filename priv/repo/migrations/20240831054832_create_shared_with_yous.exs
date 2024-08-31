@@ -3,7 +3,6 @@ defmodule PlotsCreator.Repo.Migrations.CreateSharedWithYous do
 
   def change do
     create table(:shared_with_yous) do
-
       timestamps()
     end
   end

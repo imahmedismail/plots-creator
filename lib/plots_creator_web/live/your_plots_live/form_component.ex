@@ -28,7 +28,10 @@ defmodule PlotsCreatorWeb.YourPlotsLive.FormComponent do
   end
 
   defp save_your_plots(socket, :edit, your_plots_params) do
-    case Dashboard.update_your_plots(socket.assigns.your_plots, your_plots_params) do
+    case Dashboard.update_your_plots(
+           socket.assigns.your_plots,
+           your_plots_params
+         ) do
       {:ok, _your_plots} ->
         {:noreply,
          socket

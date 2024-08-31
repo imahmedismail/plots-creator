@@ -2,6 +2,6 @@ defmodule PlotsCreatorWeb.PageController do
   use PlotsCreatorWeb, :controller
 
   def index(conn, _params) do
-    render(conn, "index.html")
+    redirect(conn, to: Routes.user_registration_path(conn, :new))
   end
 end

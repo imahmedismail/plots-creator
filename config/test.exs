@@ -20,7 +20,8 @@ config :plots_creator, PlotsCreator.Repo,
 # you can enable the server option below.
 config :plots_creator, PlotsCreatorWeb.Endpoint,
   http: [ip: {127, 0, 0, 1}, port: 4002],
-  secret_key_base: "YSUOTy8VOz/V/D6n/XY3859dfABBLLMybyiXmVd+L0GI8TpRCX/PMAw6Rnu3aNwJ",
+  secret_key_base:
+    "YSUOTy8VOz/V/D6n/XY3859dfABBLLMybyiXmVd+L0GI8TpRCX/PMAw6Rnu3aNwJ",
   server: false
 
 # In test we don't send emails.
