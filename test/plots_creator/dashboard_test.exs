@@ -54,4 +54,56 @@ defmodule PlotsCreator.DashboardTest do
       assert %Ecto.Changeset{} = Dashboard.change_your_plots(your_plots)
     end
   end
+
+  describe "shared_with_yous" do
+    alias PlotsCreator.Dashboard.SharedWithYou
+
+    import PlotsCreator.DashboardFixtures
+
+    @invalid_attrs %{}
+
+    test "list_shared_with_yous/0 returns all shared_with_yous" do
+      shared_with_you = shared_with_you_fixture()
+      assert Dashboard.list_shared_with_yous() == [shared_with_you]
+    end
+
+    test "get_shared_with_you!/1 returns the shared_with_you with given id" do
+      shared_with_you = shared_with_you_fixture()
+      assert Dashboard.get_shared_with_you!(shared_with_you.id) == shared_with_you
+    end
+
+    test "create_shared_with_you/1 with valid data creates a shared_with_you" do
+      valid_attrs = %{}
+
+      assert {:ok, %SharedWithYou{} = shared_with_you} = Dashboard.create_shared_with_you(valid_attrs)
+    end
+
+    test "create_shared_with_you/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Dashboard.create_shared_with_you(@invalid_attrs)
+    end
+
+    test "update_shared_with_you/2 with valid data updates the shared_with_you" do
+      shared_with_you = shared_with_you_fixture()
+      update_attrs = %{}
+
+      assert {:ok, %SharedWithYou{} = shared_with_you} = Dashboard.update_shared_with_you(shared_with_you, update_attrs)
+    end
+
+    test "update_shared_with_you/2 with invalid data returns error changeset" do
+      shared_with_you = shared_with_you_fixture()
+      assert {:error, %Ecto.Changeset{}} = Dashboard.update_shared_with_you(shared_with_you, @invalid_attrs)
+      assert shared_with_you == Dashboard.get_shared_with_you!(shared_with_you.id)
+    end
+
+    test "delete_shared_with_you/1 deletes the shared_with_you" do
+      shared_with_you = shared_with_you_fixture()
+      assert {:ok, %SharedWithYou{}} = Dashboard.delete_shared_with_you(shared_with_you)
+      assert_raise Ecto.NoResultsError, fn -> Dashboard.get_shared_with_you!(shared_with_you.id) end
+    end
+
+    test "change_shared_with_you/1 returns a shared_with_you changeset" do
+      shared_with_you = shared_with_you_fixture()
+      assert %Ecto.Changeset{} = Dashboard.change_shared_with_you(shared_with_you)
+    end
+  end
 end

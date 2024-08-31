@@ -78,6 +78,18 @@ defmodule PlotsCreatorWeb.Router do
     get "/users/settings", UserSettingsController, :edit
     put "/users/settings", UserSettingsController, :update
     get "/users/settings/confirm_email/:token", UserSettingsController, :confirm_email
+
+    live "/your_plots", YourPlotsLive.Index, :index
+    live "/your_plots/new", YourPlotsLive.Index, :new
+    live "/your_plots/:id/edit", YourPlotsLive.Index, :edit
+    live "/your_plots/:id", YourPlotsLive.Show, :show
+    live "/your_plots/:id/show/edit", YourPlotsLive.Show, :edit
+
+    live "/shared_with_yous", SharedWithYouLive.Index, :index
+    live "/shared_with_yous/new", SharedWithYouLive.Index, :new
+    live "/shared_with_yous/:id/edit", SharedWithYouLive.Index, :edit
+    live "/shared_with_yous/:id", SharedWithYouLive.Show, :show
+    live "/shared_with_yous/:id/show/edit", SharedWithYouLive.Show, :edit
   end
 
   scope "/", PlotsCreatorWeb do

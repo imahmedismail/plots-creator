@@ -17,4 +17,18 @@ defmodule PlotsCreator.DashboardFixtures do
 
     your_plots
   end
+
+  @doc """
+  Generate a shared_with_you.
+  """
+  def shared_with_you_fixture(attrs \\ %{}) do
+    {:ok, shared_with_you} =
+      attrs
+      |> Enum.into(%{
+
+      })
+      |> PlotsCreator.Dashboard.create_shared_with_you()
+
+    shared_with_you
+  end
 end
