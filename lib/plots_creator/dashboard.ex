@@ -21,6 +21,10 @@ defmodule PlotsCreator.Dashboard do
     Repo.all(YourPlots)
   end
 
+  def list_your_plots(user_id) do
+    Repo.all(from(yp in YourPlots, where: yp.user_id == ^user_id))
+  end
+
   @doc """
   Gets a single your_plots.
 

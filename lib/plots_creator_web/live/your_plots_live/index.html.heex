@@ -8,6 +8,7 @@
       title={@page_title}
       action={@live_action}
       your_plots={@your_plots}
+      current_user={@current_user}
       return_to={Routes.your_plots_index_path(@socket, :index)}
     />
   </.modal>
@@ -45,6 +46,9 @@
           </td>
           <td class="px-6 py-4 whitespace-no-wrap">
             <span class="inline-flex rounded-md shadow-sm">
+              <%= live_patch "Share", to: Routes.shared_with_you_index_path(@socket, :new), class: "text-green-600 hover:text-green-900" %>
+            </span>
+            <span class="inline-flex rounded-md shadow-sm ml-2">
               <%= live_redirect "Show", to: Routes.your_plots_show_path(@socket, :show, your_plots), class: "text-blue-600 hover:text-blue-900" %>
             </span>
             <span class="inline-flex rounded-md shadow-sm ml-2">
