@@ -14,8 +14,15 @@ defmodule PlotsCreatorWeb.YourPlotsLive.Show do
   @impl true
   def handle_params(%{"id" => id}, _, socket) do
     your_plot = Dashboard.get_your_plots!(id)
-    {:ok, column_record} = GitHubClient.fetch_csv_headers(your_plot.dataset_name, your_plot.expression)
+
+    {:ok, column_record} =
+      GitHubClient.fetch_csv_headers(
+        your_plot.dataset_name,
+        your_plot.expression
+      )
+
     dataset = create_histogram_dataset(your_plot.expression, column_record)
+
     {:noreply,
      socket
      |> assign(:page_title, page_title(socket.assigns.live_action))
