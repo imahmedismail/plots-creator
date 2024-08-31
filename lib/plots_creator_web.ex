@@ -45,7 +45,7 @@ defmodule PlotsCreatorWeb do
   def live_view do
     quote do
       use Phoenix.LiveView,
-        layout: {PlotsCreatorWeb.LayoutView, "live.html"}
+        layout: {PlotsCreatorWeb.LayoutView, "app.html"}
 
       unquote(view_helpers())
     end

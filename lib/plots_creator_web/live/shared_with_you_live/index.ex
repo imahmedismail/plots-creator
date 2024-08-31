@@ -3,10 +3,17 @@ defmodule PlotsCreatorWeb.SharedWithYouLive.Index do
 
   alias PlotsCreator.Dashboard
   alias PlotsCreator.Dashboard.SharedWithYou
+  alias PlotsCreator.Accounts
 
   @impl true
-  def mount(_params, _session, socket) do
-    {:ok, assign(socket, :shared_with_yous, list_shared_with_yous())}
+  def mount(_params, session, socket) do
+    current_user = Accounts.get_user_by_session_token(session["user_token"])
+
+    {:ok,
+     assign(socket, %{
+       shared_with_yous: list_shared_with_yous(),
+       current_user: current_user
+     })}
   end
 
   @impl true

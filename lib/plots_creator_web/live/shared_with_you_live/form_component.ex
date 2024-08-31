@@ -14,7 +14,11 @@ defmodule PlotsCreatorWeb.SharedWithYouLive.FormComponent do
   end
 
   @impl true
-  def handle_event("validate", %{"shared_with_you" => shared_with_you_params}, socket) do
+  def handle_event(
+        "validate",
+        %{"shared_with_you" => shared_with_you_params},
+        socket
+      ) do
     changeset =
       socket.assigns.shared_with_you
       |> Dashboard.change_shared_with_you(shared_with_you_params)
@@ -23,12 +27,19 @@ defmodule PlotsCreatorWeb.SharedWithYouLive.FormComponent do
     {:noreply, assign(socket, :changeset, changeset)}
   end
 
-  def handle_event("save", %{"shared_with_you" => shared_with_you_params}, socket) do
+  def handle_event(
+        "save",
+        %{"shared_with_you" => shared_with_you_params},
+        socket
+      ) do
     save_shared_with_you(socket, socket.assigns.action, shared_with_you_params)
   end
 
   defp save_shared_with_you(socket, :edit, shared_with_you_params) do
-    case Dashboard.update_shared_with_you(socket.assigns.shared_with_you, shared_with_you_params) do
+    case Dashboard.update_shared_with_you(
+           socket.assigns.shared_with_you,
+           shared_with_you_params
+         ) do
       {:ok, _shared_with_you} ->
         {:noreply,
          socket

@@ -1,53 +1,63 @@
-<h1>Settings</h1>
+<h1 class="text-2xl font-bold text-center mb-6">Settings</h1>
 
-<h3>Change email</h3>
+<h3 class="text-xl font-semibold mb-4">Change email</h3>
 
-<.form let={f} for={@email_changeset} action={Routes.user_settings_path(@conn, :update)} id="update_email">
+<.form let={f} for={@email_changeset} action={Routes.user_settings_path(@conn, :update)} id="update_email" class="max-w-md mx-auto bg-white p-6 rounded-lg shadow-md">
   <%= if @email_changeset.action do %>
-    <div class="alert alert-danger">
+    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4" role="alert">
       <p>Oops, something went wrong! Please check the errors below.</p>
     </div>
   <% end %>
 
   <%= hidden_input f, :action, name: "action", value: "update_email" %>
 
-  <%= label f, :email %>
-  <%= email_input f, :email, required: true %>
-  <%= error_tag f, :email %>
+  <div class="mb-4">
+    <%= label f, :email, class: "block text-sm font-medium text-gray-700" %>
+    <%= email_input f, :email, required: true, class: "mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 p-2" %>
+    <%= error_tag f, :email %>
+  </div>
 
-  <%= label f, :current_password, for: "current_password_for_email" %>
-  <%= password_input f, :current_password, required: true, name: "current_password", id: "current_password_for_email" %>
-  <%= error_tag f, :current_password %>
+  <div class="mb-4">
+    <%= label f, :current_password, "Current password", class: "block text-sm font-medium text-gray-700" %>
+    <%= password_input f, :current_password, required: true, name: "current_password", id: "current_password_for_email", class: "mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 p-2" %>
+    <%= error_tag f, :current_password %>
+  </div>
 
-  <div>
-    <%= submit "Change email" %>
+  <div class="mt-6">
+    <%= submit "Change email", class: "w-full bg-blue-600 text-white font-bold py-2 px-4 rounded hover:bg-blue-700 transition-colors" %>
   </div>
 </.form>
 
-<h3>Change password</h3>
+<h3 class="text-xl font-semibold mb-4 mt-8">Change password</h3>
 
-<.form let={f} for={@password_changeset} action={Routes.user_settings_path(@conn, :update)} id="update_password">
+<.form let={f} for={@password_changeset} action={Routes.user_settings_path(@conn, :update)} id="update_password" class="max-w-md mx-auto bg-white p-6 rounded-lg shadow-md">
   <%= if @password_changeset.action do %>
-    <div class="alert alert-danger">
+    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4" role="alert">
       <p>Oops, something went wrong! Please check the errors below.</p>
     </div>
   <% end %>
 
   <%= hidden_input f, :action, name: "action", value: "update_password" %>
 
-  <%= label f, :password, "New password" %>
-  <%= password_input f, :password, required: true %>
-  <%= error_tag f, :password %>
+  <div class="mb-4">
+    <%= label f, :password, "New password", class: "block text-sm font-medium text-gray-700" %>
+    <%= password_input f, :password, required: true, class: "mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 p-2" %>
+    <%= error_tag f, :password %>
+  </div>
 
-  <%= label f, :password_confirmation, "Confirm new password" %>
-  <%= password_input f, :password_confirmation, required: true %>
-  <%= error_tag f, :password_confirmation %>
+  <div class="mb-4">
+    <%= label f, :password_confirmation, "Confirm new password", class: "block text-sm font-medium text-gray-700" %>
+    <%= password_input f, :password_confirmation, required: true, class: "mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 p-2" %>
+    <%= error_tag f, :password_confirmation %>
+  </div>
 
-  <%= label f, :current_password, for: "current_password_for_password" %>
-  <%= password_input f, :current_password, required: true, name: "current_password", id: "current_password_for_password" %>
-  <%= error_tag f, :current_password %>
+  <div class="mb-4">
+    <%= label f, :current_password, "Current password", class: "block text-sm font-medium text-gray-700" %>
+    <%= password_input f, :current_password, required: true, name: "current_password", id: "current_password_for_password", class: "mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 p-2" %>
+    <%= error_tag f, :current_password %>
+  </div>
 
-  <div>
-    <%= submit "Change password" %>
+  <div class="mt-6">
+    <%= submit "Change password", class: "w-full bg-blue-600 text-white font-bold py-2 px-4 rounded hover:bg-blue-700 transition-colors" %>
   </div>
 </.form>

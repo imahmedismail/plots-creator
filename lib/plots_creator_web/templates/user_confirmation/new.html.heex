@@ -1,15 +1,17 @@
-<h1>Resend confirmation instructions</h1>
+<h1 class="text-2xl font-bold text-center mb-6">Resend confirmation instructions</h1>
 
-<.form let={f} for={:user} action={Routes.user_confirmation_path(@conn, :create)}>
-  <%= label f, :email %>
-  <%= email_input f, :email, required: true %>
+<.form let={f} for={:user} action={Routes.user_confirmation_path(@conn, :create)} class="max-w-md mx-auto bg-white p-6 rounded-lg shadow-md">
+  <div class="mb-4">
+    <%= label f, :email, class: "block text-sm font-medium text-gray-700" %>
+    <%= email_input f, :email, required: true, class: "mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 p-2" %>
+  </div>
 
-  <div>
-    <%= submit "Resend confirmation instructions" %>
+  <div class="mt-6">
+    <%= submit "Resend confirmation instructions", class: "w-full bg-blue-600 text-white font-bold py-2 px-4 rounded hover:bg-blue-700 transition-colors" %>
   </div>
 </.form>
 
-<p>
-  <%= link "Register", to: Routes.user_registration_path(@conn, :new) %> |
-  <%= link "Log in", to: Routes.user_session_path(@conn, :new) %>
+<p class="text-center mt-4">
+  <%= link "Register", to: Routes.user_registration_path(@conn, :new), class: "text-blue-600 hover:underline" %> |
+  <%= link "Log in", to: Routes.user_session_path(@conn, :new), class: "text-blue-600 hover:underline" %>
 </p>

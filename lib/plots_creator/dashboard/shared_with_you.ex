@@ -3,8 +3,6 @@ defmodule PlotsCreator.Dashboard.SharedWithYou do
   import Ecto.Changeset
 
   schema "shared_with_yous" do
-
-
     timestamps()
   end
 

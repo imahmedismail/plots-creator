@@ -1,26 +1,30 @@
-<h1>Reset password</h1>
+<h1 class="text-2xl font-bold text-center mb-6">Reset password</h1>
 
-<.form let={f} for={@changeset} action={Routes.user_reset_password_path(@conn, :update, @token)}>
+<.form let={f} for={@changeset} action={Routes.user_reset_password_path(@conn, :update, @token)} class="max-w-md mx-auto bg-white p-6 rounded-lg shadow-md">
   <%= if @changeset.action do %>
-    <div class="alert alert-danger">
+    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4" role="alert">
       <p>Oops, something went wrong! Please check the errors below.</p>
     </div>
   <% end %>
 
-  <%= label f, :password, "New password" %>
-  <%= password_input f, :password, required: true %>
-  <%= error_tag f, :password %>
+  <div class="mb-4">
+    <%= label f, :password, "New password", class: "block text-sm font-medium text-gray-700" %>
+    <%= password_input f, :password, required: true, class: "mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 p-2" %>
+    <%= error_tag f, :password %>
+  </div>
 
-  <%= label f, :password_confirmation, "Confirm new password" %>
-  <%= password_input f, :password_confirmation, required: true %>
-  <%= error_tag f, :password_confirmation %>
+  <div class="mb-4">
+    <%= label f, :password_confirmation, "Confirm new password", class: "block text-sm font-medium text-gray-700" %>
+    <%= password_input f, :password_confirmation, required: true, class: "mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 p-2" %>
+    <%= error_tag f, :password_confirmation %>
+  </div>
 
-  <div>
-    <%= submit "Reset password" %>
+  <div class="mt-6">
+    <%= submit "Reset password", class: "w-full bg-blue-600 text-white font-bold py-2 px-4 rounded hover:bg-blue-700 transition-colors" %>
   </div>
 </.form>
 
-<p>
-  <%= link "Register", to: Routes.user_registration_path(@conn, :new) %> |
-  <%= link "Log in", to: Routes.user_session_path(@conn, :new) %>
+<p class="text-center mt-4">
+  <%= link "Register", to: Routes.user_registration_path(@conn, :new), class: "text-blue-600 hover:underline" %> |
+  <%= link "Log in", to: Routes.user_session_path(@conn, :new), class: "text-blue-600 hover:underline" %>
 </p>

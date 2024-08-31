@@ -13,7 +13,11 @@ config :plots_creator,
 # Configures the endpoint
 config :plots_creator, PlotsCreatorWeb.Endpoint,
   url: [host: "localhost"],
-  render_errors: [view: PlotsCreatorWeb.ErrorView, accepts: ~w(html json), layout: false],
+  render_errors: [
+    view: PlotsCreatorWeb.ErrorView,
+    accepts: ~w(html json),
+    layout: false
+  ],
   pubsub_server: PlotsCreator.PubSub,
   live_view: [signing_salt: "5tTe5E/e"]
 
@@ -47,14 +51,16 @@ config :logger, :console,
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 
-config :tailwind, version: "3.4.10", default: [
-  args: ~w(
+config :tailwind,
+  version: "3.4.10",
+  default: [
+    args: ~w(
     --config=tailwind.config.js
     --input=css/app.css
     --output=../priv/static/assets/app.css
   ),
-  cd: Path.expand("../assets", __DIR__)
-]
+    cd: Path.expand("../assets", __DIR__)
+  ]
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
