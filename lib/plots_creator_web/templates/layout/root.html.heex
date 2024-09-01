@@ -14,8 +14,6 @@
     <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
   </head>
   <body>
-    <p id="info-flash" class="alert alert-info" role="alert" phx-hook="FlashAutoDismiss"><%= get_flash(@conn, :info) %></p>
-    <p id="error-flash" class="alert alert-danger" role="alert" phx-hook="FlashAutoDismiss"><%= get_flash(@conn, :error) %></p>
     <%= @inner_content %>
   </body>
 </html>
