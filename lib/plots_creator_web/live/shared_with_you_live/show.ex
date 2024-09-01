@@ -2,20 +2,38 @@ defmodule PlotsCreatorWeb.SharedWithYouLive.Show do
   use PlotsCreatorWeb, :live_view
 
   alias PlotsCreator.Dashboard
+  alias PlotsCreator.Accounts
+  alias PlotsCreator.GitHubClient
 
   @impl true
-  def mount(_params, _session, socket) do
-    {:ok, socket}
+  def mount(_params, session, socket) do
+    current_user = Accounts.get_user_by_session_token(session["user_token"])
+    {:ok, socket |> assign(:current_user, current_user)}
   end
 
   @impl true
   def handle_params(%{"id" => id}, _, socket) do
+    your_plot = Dashboard.get_your_plots!(id)
+
+    {:ok, column_record} =
+      GitHubClient.fetch_csv_headers(
+        your_plot.dataset_name,
+        your_plot.expression
+      )
+
+    dataset = create_histogram_dataset(your_plot.expression, column_record)
+
     {:noreply,
      socket
      |> assign(:page_title, page_title(socket.assigns.live_action))
-     |> assign(:shared_with_you, Dashboard.get_shared_with_you!(id))}
+     |> assign(:shared_with_you, your_plot)
+     |> assign(:dataset, dataset)}
   end
 
   defp page_title(:show), do: "Show Shared with you"
   defp page_title(:edit), do: "Edit Shared with you"
+
+  defp create_histogram_dataset(column_name, column_record) do
+    Enum.map(column_record, fn record -> %{x: record, y: column_name} end)
+  end
 end

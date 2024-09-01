@@ -54,12 +54,11 @@ defmodule PlotsCreatorWeb.YourPlotsLive.Index do
   def handle_event(
         "share_plot",
         %{"id" => id},
-        %{assigns: %{current_user: %{id: user_id}}} = socket
+        %{assigns: %{current_user: %{id: _user_id}}} = socket
       ) do
-    _your_plots = Dashboard.get_your_plots!(id)
-    # Dashboard.share_plot(your_plots)
+    your_plots = Dashboard.get_your_plots!(id)
 
-    {:noreply, assign(socket, :your_plots_collection, list_your_plots(user_id))}
+    {:noreply, socket |> assign(:your_plots, your_plots) |> assign(:live_action, :open_shared_plots_form)}
   end
 
   defp list_your_plots(user_id) do
