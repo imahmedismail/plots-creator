@@ -51,9 +51,7 @@ Plots Creator is a Phoenix LiveView application that allows users to create and 
 
 ## Video Recording
 
-<video width="640" height="480" controls>
-  <source src="https://youtu.be/ONVOaSrUlz4" type="video/mp4">
-</video>
+[Watch the video on YouTube](https://youtu.be/ONVOaSrUlz4)
 
 ## Usage
 
