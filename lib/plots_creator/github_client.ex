@@ -3,7 +3,7 @@ defmodule PlotsCreator.GitHubClient do
   @headers [
     {"User-Agent", "Elixir"},
     {"Authorization",
-     "token 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"}
+     "token #{System.get_env("GITHUB_TOKEN")}"}
   ]
 
   def fetch_csv_headers(csv_name, column_name) do

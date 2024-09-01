@@ -7,6 +7,7 @@
       id={@your_plots.id}
       title={@page_title}
       action={@live_action}
+      current_user={@current_user}
       your_plots={@your_plots}
       return_to={Routes.your_plots_show_path(@socket, :show, @your_plots)}
     />

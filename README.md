@@ -49,6 +49,10 @@ Plots Creator is a Phoenix LiveView application that allows users to create and 
 
 5. Visit `http://localhost:4000` in your browser to see the application.
 
+## Video Recording
+
+<iframe width="560" height="315" src="https://youtu.be/ONVOaSrUlz4" frameborder="0" allowfullscreen></iframe>
+
 ## Usage
 
 - **Creating a Plot:** Navigate to 'Your Plots' and click 'New Plot'. Enter the plot name, dataset, and expression, then click 'Create'.
