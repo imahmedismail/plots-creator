@@ -11,7 +11,7 @@ defmodule PlotsCreatorWeb.YourPlotsLive.Index do
 
     {:ok,
      assign(socket, %{
-       your_plots_collection: list_your_plots(),
+       your_plots_collection: list_your_plots(current_user.id),
        current_user: current_user
      })}
   end
@@ -40,14 +40,28 @@ defmodule PlotsCreatorWeb.YourPlotsLive.Index do
   end
 
   @impl true
-  def handle_event("delete", %{"id" => id}, socket) do
+  def handle_event(
+        "delete",
+        %{"id" => id},
+        %{assigns: %{current_user: %{id: user_id}}} = socket
+      ) do
     your_plots = Dashboard.get_your_plots!(id)
     {:ok, _} = Dashboard.delete_your_plots(your_plots)
 
-    {:noreply, assign(socket, :your_plots_collection, list_your_plots())}
+    {:noreply, assign(socket, :your_plots_collection, list_your_plots(user_id))}
   end
 
-  defp list_your_plots do
-    Dashboard.list_your_plots()
+  def handle_event(
+        "share_plot",
+        %{"id" => id},
+        %{assigns: %{current_user: %{id: _user_id}}} = socket
+      ) do
+    your_plots = Dashboard.get_your_plots!(id)
+
+    {:noreply, socket |> assign(:your_plots, your_plots) |> assign(:live_action, :open_shared_plots_form)}
+  end
+
+  defp list_your_plots(user_id) do
+    Dashboard.list_your_plots(user_id)
   end
 end

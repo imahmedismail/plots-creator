@@ -21,6 +21,14 @@ defmodule PlotsCreator.Dashboard do
     Repo.all(YourPlots)
   end
 
+  def list_your_plots(user_id) do
+    Repo.all(from(yp in YourPlots, where: yp.user_id == ^user_id))
+  end
+
+  def list_your_plots_by(plot_ids) do
+    Repo.all(from(yp in YourPlots, where: yp.id in ^plot_ids))
+  end
+
   @doc """
   Gets a single your_plots.
 
@@ -113,6 +121,10 @@ defmodule PlotsCreator.Dashboard do
   """
   def list_shared_with_yous do
     Repo.all(SharedWithYou)
+  end
+
+  def list_shared_with_yous(user_id) do
+    Repo.all(from(swy in SharedWithYou, where: swy.shared_to == ^user_id))
   end
 
   @doc """

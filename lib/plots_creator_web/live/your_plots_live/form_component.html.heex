@@ -9,6 +9,8 @@
     phx-change="validate"
     phx-submit="save"
     class="space-y-6">
+    
+    <input type="hidden" name="your_plots[user_id]" value={@current_user.id} />
 
     <div>
       <%= label f, :name, class: "block text-sm font-medium text-gray-700" %>

@@ -1,5 +1,20 @@
 <h1 class="text-2xl font-bold mb-4">Listing Your Plots</h1>
 
+<%= if @live_action == :open_shared_plots_form do %>
+  <.modal return_to={Routes.your_plots_index_path(@socket, :index)}>
+    <.live_component
+      module={PlotsCreatorWeb.YourPlotsLive.SharedPlotFormComponent}
+      id={:new}
+      title={@page_title}
+      action={@live_action}
+      shared_with_you={%PlotsCreator.Dashboard.SharedWithYou{}}
+      your_plots={@your_plots}
+      current_user={@current_user}
+      return_to={Routes.your_plots_index_path(@socket, :index)}
+    />
+  </.modal>
+<% end %>
+
 <%= if @live_action in [:new, :edit] do %>
   <.modal return_to={Routes.your_plots_index_path(@socket, :index)}>
     <.live_component
@@ -8,6 +23,7 @@
       title={@page_title}
       action={@live_action}
       your_plots={@your_plots}
+      current_user={@current_user}
       return_to={Routes.your_plots_index_path(@socket, :index)}
     />
   </.modal>
@@ -45,6 +61,9 @@
           </td>
           <td class="px-6 py-4 whitespace-no-wrap">
             <span class="inline-flex rounded-md shadow-sm">
+              <%= link "Share", to: "#", phx_click: "share_plot", phx_value_id: your_plots.id, class: "text-green-600 hover:text-green-900" %>
+            </span>
+            <span class="inline-flex rounded-md shadow-sm ml-2">
               <%= live_redirect "Show", to: Routes.your_plots_show_path(@socket, :show, your_plots), class: "text-blue-600 hover:text-blue-900" %>
             </span>
             <span class="inline-flex rounded-md shadow-sm ml-2">

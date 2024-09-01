@@ -6,6 +6,7 @@ defmodule PlotsCreator.Repo.Migrations.CreateYourPlots do
       add(:name, :string)
       add(:dataset_name, :string)
       add(:expression, :string)
+      add(:user_id, references(:users, on_delete: :delete_all))
 
       timestamps()
     end

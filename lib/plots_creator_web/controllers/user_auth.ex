@@ -23,7 +23,7 @@ defmodule PlotsCreatorWeb.UserAuth do
   """
   def log_in_user(conn, user, params \\ %{}) do
     token = Accounts.generate_user_session_token(user)
-    user_return_to = get_session(conn, :user_return_to)
+    user_return_to = "/your_plots"
 
     conn
     |> renew_session()
@@ -140,5 +140,5 @@ defmodule PlotsCreatorWeb.UserAuth do
 
   defp maybe_store_return_to(conn), do: conn
 
-  defp signed_in_path(_conn), do: "/"
+  defp signed_in_path(_conn), do: "/your_plots"
 end
