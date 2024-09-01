@@ -3,15 +3,20 @@ defmodule PlotsCreator.DashboardFixtures do
   This module defines test helpers for creating
   entities via the `PlotsCreator.Dashboard` context.
   """
-
+  alias PlotsCreator.AccountsFixtures
   @doc """
   Generate a your_plots.
   """
   def your_plots_fixture(attrs \\ %{}) do
+    user_id = AccountsFixtures.user_fixture().id
+
     {:ok, your_plots} =
       attrs
       |> Enum.into(%{
-
+        name: "Your plots",
+        dataset_name: "Dataset name",
+        expression: "Expression",
+        user_id: user_id
       })
       |> PlotsCreator.Dashboard.create_your_plots()
 
@@ -25,7 +30,9 @@ defmodule PlotsCreator.DashboardFixtures do
     {:ok, shared_with_you} =
       attrs
       |> Enum.into(%{
-
+        "shared_by" => AccountsFixtures.user_fixture().id,
+        "shared_to" => AccountsFixtures.user_fixture().id,
+        "plot_id" => your_plots_fixture().id
       })
       |> PlotsCreator.Dashboard.create_shared_with_you()
 

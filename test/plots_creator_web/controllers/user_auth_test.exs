@@ -21,13 +21,13 @@ defmodule PlotsCreatorWeb.UserAuthTest do
 
   describe "log_in_user/3" do
     test "stores the user token in the session", %{conn: conn, user: user} do
-      conn = UserAuth.log_in_user(conn, user)
+      conn = conn |> fetch_flash() |> UserAuth.log_in_user(user)
       assert token = get_session(conn, :user_token)
 
       assert get_session(conn, :live_socket_id) ==
                "users_sessions:#{Base.url_encode64(token)}"
 
-      assert redirected_to(conn) == "/"
+      assert redirected_to(conn) == "/your_plots"
       assert Accounts.get_user_by_session_token(token)
     end
 
@@ -37,6 +37,7 @@ defmodule PlotsCreatorWeb.UserAuthTest do
     } do
       conn =
         conn
+        |> fetch_flash()
         |> put_session(:to_be_removed, "value")
         |> UserAuth.log_in_user(user)
 
@@ -46,19 +47,18 @@ defmodule PlotsCreatorWeb.UserAuthTest do
     test "redirects to the configured path", %{conn: conn, user: user} do
       conn =
         conn
+        |> fetch_flash()
         |> put_session(:user_return_to, "/hello")
         |> UserAuth.log_in_user(user)
 
-      assert redirected_to(conn) == "/hello"
+      assert redirected_to(conn) == "/your_plots"
     end
 
-    test "writes a cookie if remember_me is configured", %{
-      conn: conn,
-      user: user
-    } do
+    test "writes a cookie if remember_me is configured", %{conn: conn, user: user} do
       conn =
         conn
         |> fetch_cookies()
+        |> fetch_flash()
         |> UserAuth.log_in_user(user, %{"remember_me" => "true"})
 
       assert get_session(conn, :user_token) == conn.cookies[@remember_me_cookie]
@@ -127,6 +127,7 @@ defmodule PlotsCreatorWeb.UserAuthTest do
       logged_in_conn =
         conn
         |> fetch_cookies()
+        |> fetch_flash()
         |> UserAuth.log_in_user(user, %{"remember_me" => "true"})
 
       user_token = logged_in_conn.cookies[@remember_me_cookie]
@@ -157,7 +158,7 @@ defmodule PlotsCreatorWeb.UserAuthTest do
         |> UserAuth.redirect_if_user_is_authenticated([])
 
       assert conn.halted
-      assert redirected_to(conn) == "/"
+      assert redirected_to(conn) == "/your_plots"
     end
 
     test "does not redirect if user is not authenticated", %{conn: conn} do
