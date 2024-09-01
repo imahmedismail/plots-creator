@@ -1,19 +1,61 @@
-# PlotsCreator
+# Plots Creator
 
-To start your Phoenix server:
+Plots Creator is a Phoenix LiveView application that allows users to create and share data visualizations. Users can input datasets and expressions, generate plots using Plotly.js, and collaborate with others.
 
-  * Install dependencies with `mix deps.get`
-  * Create and migrate your database with `mix ecto.setup`
-  * Start Phoenix endpoint with `mix phx.server` or inside IEx with `iex -S mix phx.server`
+## Features
 
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
+- **User Authentication:** Secure login and registration system with password reset functionality.
+- **Data Visualization:** Create plots by inputting a dataset and an expression.
+- **Plotting Library:** Plots are rendered using [Plotly.js](https://plotly.com/javascript/), a powerful JavaScript graphing library.
+- **Real-Time Updates:** Leverages Phoenix LiveView for dynamic and real-time user interactions.
+- **User Dashboard:** Manage your plots and view plots shared with you.
+- **Flash Messages:** Auto-dismissing flash messages for a better user experience.
 
-Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
+## Getting Started
 
-## Learn more
+### Prerequisites
 
-  * Official website: https://www.phoenixframework.org/
-  * Guides: https://hexdocs.pm/phoenix/overview.html
-  * Docs: https://hexdocs.pm/phoenix
-  * Forum: https://elixirforum.com/c/phoenix-forum
-  * Source: https://github.com/phoenixframework/phoenix
+- **Elixir**: v1.12 or higher
+- **Phoenix Framework**: v1.6 or higher
+- **Node.js**: v14 or higher (for asset management)
+
+### Installation
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/imahmedismail/plots-creator.git
+   cd plots-creator
+   ```
+
+2. Install dependencies:
+
+    ```bash
+    mix deps.get
+    npm install --prefix assets
+    ```
+
+3. Set up the database:
+
+    ```bash
+    mix ecto.setup
+    ```
+
+4. Start the Phoenix server:
+
+    ```bash
+    mix phx.server
+    ```
+
+5. Visit `http://localhost:4000` in your browser to see the application.
+
+## Usage
+
+- **Creating a Plot:** Navigate to 'Your Plots' and click 'New Plot'. Enter the plot name, dataset, and expression, then click 'Create'.
+- **Sharing Plots:** Plots can be shared with other users via the 'Shared with you' page.
+- **Plot Examples:** Explore the sample dataset provided (earthquake.csv) for quick plotting.
+
+## Acknowledgments
+
+- **Plotly.js:** Used for rendering the plots.
+- **Phoenix Framework:** Provides the web and real-time backend.
