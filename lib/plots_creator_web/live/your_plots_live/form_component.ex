@@ -35,7 +35,7 @@ defmodule PlotsCreatorWeb.YourPlotsLive.FormComponent do
       {:ok, _your_plots} ->
         {:noreply,
          socket
-         |> put_flash(:info, "Your plots updated successfully")
+         |> put_flash(:info, "Your plot has been updated successfully")
          |> push_redirect(to: socket.assigns.return_to)}
 
       {:error, %Ecto.Changeset{} = changeset} ->
@@ -48,7 +48,7 @@ defmodule PlotsCreatorWeb.YourPlotsLive.FormComponent do
       {:ok, _your_plots} ->
         {:noreply,
          socket
-         |> put_flash(:info, "Your plots created successfully")
+         |> put_flash(:info, "Plot has been added successfully")
          |> push_redirect(to: socket.assigns.return_to)}
 
       {:error, %Ecto.Changeset{} = changeset} ->

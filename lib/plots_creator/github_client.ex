@@ -2,8 +2,7 @@ defmodule PlotsCreator.GitHubClient do
   @base_url "https://api.github.com/repos/plotly/datasets/contents"
   @headers [
     {"User-Agent", "Elixir"},
-    {"Authorization",
-     "token #{System.get_env("GITHUB_TOKEN")}"}
+    {"Authorization", "token #{System.get_env("GITHUB_TOKEN")}"}
   ]
 
   def fetch_csv_headers(csv_name, column_name) do

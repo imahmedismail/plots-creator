@@ -5,9 +5,17 @@ defmodule PlotsCreatorWeb.YourPlotsLive.SharedPlotFormComponent do
   alias PlotsCreator.Dashboard
 
   @impl true
-  def update(%{shared_with_you: shared_with_you, current_user: current_user} = assigns, socket) do
+  def update(
+        %{shared_with_you: shared_with_you, current_user: current_user} =
+          assigns,
+        socket
+      ) do
     changeset = Dashboard.change_shared_with_you(shared_with_you)
-    all_users = Accounts.list_users() |> Enum.reject(& &1.id == current_user.id) |> transform_users_into_select_options()
+
+    all_users =
+      Accounts.list_users()
+      |> Enum.reject(&(&1.id == current_user.id))
+      |> transform_users_into_select_options()
 
     {:ok,
      socket
@@ -43,7 +51,7 @@ defmodule PlotsCreatorWeb.YourPlotsLive.SharedPlotFormComponent do
       {:ok, _shared_with_you} ->
         {:noreply,
          socket
-         |> put_flash(:info, "Shared with you created successfully")
+         |> put_flash(:info, "Your plot has been shared successfully")
          |> push_redirect(to: socket.assigns.return_to)}
 
       {:error, %Ecto.Changeset{} = changeset} ->

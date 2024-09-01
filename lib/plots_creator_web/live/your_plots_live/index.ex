@@ -48,7 +48,13 @@ defmodule PlotsCreatorWeb.YourPlotsLive.Index do
     your_plots = Dashboard.get_your_plots!(id)
     {:ok, _} = Dashboard.delete_your_plots(your_plots)
 
-    {:noreply, assign(socket, :your_plots_collection, list_your_plots(user_id))}
+    {:noreply,
+     socket
+     |> assign(
+       :your_plots_collection,
+       list_your_plots(user_id)
+       |> put_flash(:info, "Your plot deleted successfully")
+     )}
   end
 
   def handle_event(
@@ -58,7 +64,11 @@ defmodule PlotsCreatorWeb.YourPlotsLive.Index do
       ) do
     your_plots = Dashboard.get_your_plots!(id)
 
-    {:noreply, socket |> assign(:your_plots, your_plots) |> assign(:live_action, :open_shared_plots_form)}
+    {:noreply,
+     socket
+     |> assign(:your_plots, your_plots)
+     |> assign(:live_action, :open_shared_plots_form)
+     |> put_flash(:info, "Plot shared successfully")}
   end
 
   defp list_your_plots(user_id) do

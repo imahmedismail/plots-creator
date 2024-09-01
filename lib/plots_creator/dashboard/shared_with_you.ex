@@ -3,9 +3,15 @@ defmodule PlotsCreator.Dashboard.SharedWithYou do
   import Ecto.Changeset
 
   schema "shared_user_plots" do
-    belongs_to :shared_by_user, PlotsCreator.Accounts.User, foreign_key: :shared_by
-    belongs_to :shared_to_user, PlotsCreator.Accounts.User, foreign_key: :shared_to
-    belongs_to :your_plots, PlotsCreator.Dashboard.YourPlots, foreign_key: :plot_id
+    belongs_to :shared_by_user, PlotsCreator.Accounts.User,
+      foreign_key: :shared_by
+
+    belongs_to :shared_to_user, PlotsCreator.Accounts.User,
+      foreign_key: :shared_to
+
+    belongs_to :your_plots, PlotsCreator.Dashboard.YourPlots,
+      foreign_key: :plot_id
+
     field :shared_at, :utc_datetime
 
     timestamps()

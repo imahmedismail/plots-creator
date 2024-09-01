@@ -54,7 +54,10 @@ defmodule PlotsCreatorWeb.UserAuthTest do
       assert redirected_to(conn) == "/your_plots"
     end
 
-    test "writes a cookie if remember_me is configured", %{conn: conn, user: user} do
+    test "writes a cookie if remember_me is configured", %{
+      conn: conn,
+      user: user
+    } do
       conn =
         conn
         |> fetch_cookies()

@@ -40,7 +40,9 @@ defmodule PlotsCreatorWeb.UserSessionControllerTest do
       # Now do a logged in request and assert on the menu
       conn = get(conn, "/")
       response = html_response(conn, 302)
-      assert response =~ "<html><body>You are being <a href=\"/your_plots\">redirected</a>.</body></html>"
+
+      assert response =~
+               "<html><body>You are being <a href=\"/your_plots\">redirected</a>.</body></html>"
     end
 
     test "logs the user in with remember me", %{conn: conn, user: user} do
