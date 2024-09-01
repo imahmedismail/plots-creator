@@ -36,7 +36,7 @@ defmodule PlotsCreatorWeb.UserAuth do
     |> assign(:socket, nil)
     |> maybe_write_remember_me_cookie(token, params)
     |> put_flash(:info, "Logged in successfully.")
-    |> redirect(to: user_return_to || signed_in_path(conn))
+    |> redirect(to: user_return_to)
   end
 
   defp maybe_write_remember_me_cookie(conn, token, %{"remember_me" => "true"}) do
