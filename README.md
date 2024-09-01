@@ -48,6 +48,13 @@ Plots Creator is a Phoenix LiveView application that allows users to create and 
     ```
 
 5. Visit `http://localhost:4000` in your browser to see the application.
+6. Add .env file to your locally fetched repo and add the following line there
+
+    ```bash
+    export GITHUB_TOKEN=your_github_auth_token_here
+    ```
+
+   **Note:** You can generate the token using: `https://github.com/settings/tokens`
 
 ## Video Recording
 
