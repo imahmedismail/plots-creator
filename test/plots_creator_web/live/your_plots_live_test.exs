@@ -19,7 +19,7 @@ defmodule PlotsCreatorWeb.YourPlotsLiveTest do
     end
   end
 
-  describe "Show" do
+  describe "Describe Show" do
     setup [:create_your_plots]
 
     test "renders the show page", %{conn: conn} do
