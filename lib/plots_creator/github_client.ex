@@ -15,7 +15,7 @@ defmodule PlotsCreator.GitHubClient do
 
       {:ok, %HTTPoison.Response{status_code: status_code}} ->
         IO.puts("Failed to fetch CSV file. Status code: #{status_code}")
-        {:error, status_code}
+        {:error, "failed to fetch CSV file"}
 
       {:error, %HTTPoison.Error{reason: reason}} ->
         IO.puts("Request failed: #{reason}")
